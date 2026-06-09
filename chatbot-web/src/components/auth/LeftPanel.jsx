@@ -2,7 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Bot, Zap, FileText, Shield, CheckCircle2 } from 'lucide-react';
 
-export default function LeftPanel() {
+export default function LeftPanel({ variant = 'login' }) {
+  const isSignup = variant === 'signup';
+  const isForgot = variant === 'forgot';
+
   const features = [
     { icon: <Zap size={20} className="icon-purple" />, text: "Instant AI Conversations" },
     { icon: <FileText size={20} className="icon-blue" />, text: "Document Intelligence" },
@@ -92,13 +95,29 @@ export default function LeftPanel() {
           style={{ maxWidth: '30rem' }}
         >
           <motion.h1 variants={itemVariants} className="hero-title">
-            Your Personal <br/>
-            <span className="text-gradient">
-              AI Workspace
-            </span>
+            {isSignup ? (
+              <>
+                Build with <br />
+                <span className="text-gradient">AI</span>
+              </>
+            ) : isForgot ? (
+              <>
+                Security <br />
+                <span className="text-gradient">First</span>
+              </>
+            ) : (
+              <>
+                Your Personal <br />
+                <span className="text-gradient">AI Workspace</span>
+              </>
+            )}
           </motion.h1>
           <motion.p variants={itemVariants} className="hero-subtitle" style={{ marginBottom: '2rem' }}>
-            Chat, create, research and automate with one intelligent assistant. Designed for modern teams.
+            {isSignup
+              ? 'Join thousands building smarter workflows.'
+              : isForgot
+              ? 'We\'ll get you back in safely. Your account and data stay protected throughout the process.'
+              : 'Chat, create, research and automate with one intelligent assistant. Designed for modern teams.'}
           </motion.p>
 
           <div className="features-list">
@@ -112,6 +131,21 @@ export default function LeftPanel() {
               </motion.div>
             ))}
           </div>
+
+          {isSignup && (
+            <motion.div variants={itemVariants} className="signup-stats">
+              {[
+                { number: '10K+', label: 'Active Users' },
+                { number: '50+',  label: 'AI Models' },
+                { number: '99.9%',label: 'Uptime' },
+              ].map(({ number, label }) => (
+                <div key={label} className="stat-item">
+                  <span className="stat-number">{number}</span>
+                  <span className="stat-label">{label}</span>
+                </div>
+              ))}
+            </motion.div>
+          )}
         </motion.div>
 
       </div>

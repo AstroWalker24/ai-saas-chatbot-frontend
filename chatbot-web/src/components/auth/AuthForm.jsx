@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Bot, ArrowRight } from 'lucide-react';
 
-export default function AuthForm() {
+export default function AuthForm({ onSwitchToSignup, onForgotPassword, onNavigate }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -55,12 +55,12 @@ export default function AuthForm() {
             <input type="checkbox" className="remember-checkbox" />
             <span className="remember-text">Remember me</span>
           </label>
-          <a href="#" className="forgot-password">
+          <button type="button" className="forgot-password btn-text" onClick={onForgotPassword}>
             Forgot password?
-          </a>
+          </button>
         </div>
 
-        <button type="submit" className="btn btn-primary btn-submit group">
+        <button type="submit" className="btn btn-primary btn-submit group" onClick={() => onNavigate?.('chat')}>
           Continue
           <ArrowRight size={18} className="arrow-icon" />
         </button>
@@ -91,7 +91,10 @@ export default function AuthForm() {
       </div>
 
       <p className="auth-footer">
-        Don't have an account? <a href="#" className="signup-link">Sign Up</a>
+        Don't have an account?{' '}
+        <button type="button" className="signup-link btn-text" onClick={onSwitchToSignup}>
+          Sign Up
+        </button>
       </p>
     </motion.div>
   );
